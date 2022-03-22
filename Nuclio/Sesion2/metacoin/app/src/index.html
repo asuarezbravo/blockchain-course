@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MetaCoin </title>
+</head>
+<style>
+    input {
+        display: block;
+        margin-bottom: 12px;
+    }
+</style>
+
+<body>
+    <h1>MetaCoin — Example Truffle Dapp</h1>
+    <p>Tienes <strong class="balance">loading...</strong> Metacoins</p>
+
+    <h1>Enviar Metacoins</h1>
+    <label for="amount">Cantidad:</label>
+    <input type="text" id="amount" />
+    <label for="receiver">Destinatario:</label>
+    <input type="text" id="receiver" />
+    <button onclick="App.sendCoin()">Enviar Metacoins</button>
+    <p id="status"></p>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
