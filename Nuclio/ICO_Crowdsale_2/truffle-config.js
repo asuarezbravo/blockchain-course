@@ -1,4 +1,3 @@
-const HDWalletProvider = require("@truffle/hdwallet-provider");
 module.exports = {
   // Uncommenting the defaults below 
   // provides for an easier quick-start with Ganache.
@@ -6,7 +5,7 @@ module.exports = {
   // see <http://truffleframework.com/docs/advanced/configuration>
   // for more details on how to specify configuration options!
   //
-  networks: {
+  //networks: {
    development: {
      host: "127.0.0.1",
      port: 7545,
@@ -17,19 +16,6 @@ module.exports = {
      port: 7545,
      network_id: "*"
    },
-   ropsten: {
-     provider: function() {
-       return new HDWalletProvider("clutch owner sell board catch issue educate horn order paper initial heart", "https://ropsten.infura.io/5b07fe0e40d74d329da2cc2f9396404b")
-     },
-     network_id: 3,
-     gas: 4000000
-   }
-  },
-  compilers: {
-    solc: {
-      version: "0.8"  // ex:  "0.4.20". (Default: Truffle's installed solc)
-    }
-  },
   //
   // Truffle DB is currently disabled by default; to enable it, change enabled:
   // false to enabled: true. The default storage location can also be
@@ -51,4 +37,9 @@ module.exports = {
     //   }
     // }
   // }
+  compilers: {
+    solc: {
+      version: "0.8",
+    },
+  },
 };
