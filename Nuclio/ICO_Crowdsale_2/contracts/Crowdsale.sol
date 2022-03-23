@@ -14,7 +14,7 @@ contract Crowdsale {
     uint256 public tokenRate;
     uint256 public fundingGoal;
 
-    uint256 public tokensRaised;
+    uint256 public tokensSold;
     uint256 public tokensPaymentRaised;
 
     ERC20 public tokenPayment;
@@ -58,22 +58,19 @@ contract Crowdsale {
             (10**token.decimals());
 
         // Check if we have exceeded the funding goal to refund the exceeding tokens and ether
-        if (tokensRaised + tokensToBuy > token.totalSupply()) {
-            uint256 exceedingTokensPayment = tokensRaised +
+        if (tokensSold + tokensToBuy > token.totalSupply()) {
+            uint256 exceedingTokensSold = tokensSold +
                 tokensToBuy -
                 token.totalSupply();
-            uint256 exceedingEther;
 
             // Convert the exceedingTokens to ether and refund that ether
-            exceedingTokensPayment =
-                (exceedingTokensPayment * 10**tokenPayment.decimals()) /
+            uint256 exceedingTokensPayment =
+                (exceedingTokensSold * 10**tokenPayment.decimals()) /
                 tokenRate /
-                token.decimals();
-
-            payable(msg.sender).transfer(exceedingEther);
+                10**token.decimals();
 
             // Change the tokens to buy to the new number
-            tokensToBuy -= exceedingTokensPayment;
+            tokensToBuy -= exceedingTokensSold;
 
             // Update the counter of ether used
             _tokensPaymentReceived -= exceedingTokensPayment;
@@ -86,13 +83,13 @@ contract Crowdsale {
         tokenPayment.transferFrom(msg.sender, address(this), _tokensPaymentReceived);
 
         // Increase the tokens raised and ether raised state variables
-        tokensRaised += tokensToBuy;
+        tokensSold += tokensToBuy;
         tokensPaymentRaised += _tokensPaymentReceived;
     }
 
     function isCompleted() public view returns (bool) {
         return
-            tokensRaised >= token.totalSupply() || block.timestamp > icoEndTime;
+            tokensSold >= token.totalSupply() || block.timestamp > icoEndTime;
     }
 
     function extractEther() public whenIcoCompleted onlyOwner {

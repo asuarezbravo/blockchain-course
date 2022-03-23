@@ -1,5 +1,5 @@
-const ERC20Limites_4 = artifacts.require("ERC20Limites_4");
+const ERC20Limites = artifacts.require("ERC20Limites");
 
 module.exports = function(deployer) {
-  deployer.deploy(ERC20Limites_4, "Mi Token", "MT", 0, 1000, 10, 50)
+  deployer.deploy(ERC20Limites, "Mi Token", "MT", 0, 1000, 10, 50)
 };

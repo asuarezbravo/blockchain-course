@@ -16,6 +16,8 @@ contract Crowdsale {
     uint256 public tokensSold; // up to total supply
     uint256 public etherRaised;
 
+    event Sold(address _buyer, uint _tokensSold, uint _etherRaised, uint _totalSupply);
+
     modifier whenIcoCompleted() {
         require(isCompleted(), "ICO has not been completed yet");
         _;
@@ -66,7 +68,7 @@ contract Crowdsale {
                 token.totalSupply(); // in the smallest unit
 
             // Convert the exceedingTokens to ether and refund that ether
-            uint256 exceedingEther = exceedingTokens * 1 ether / tokenRate / (10 ** token.decimals()); // in weis
+            uint256 exceedingEther = exceedingTokens * 1 ether / tokenRate / token.decimals(); // in weis
 
             payable(msg.sender).transfer(exceedingEther);
 
@@ -83,6 +85,8 @@ contract Crowdsale {
         // Increase the tokens sold and ether raised state variables
         tokensSold += tokensToBuy;
         etherRaised += etherReceived;
+
+        emit Sold(msg.sender, tokensSold, etherRaised, token.totalSupply());
     }
 
     // Ico is completed once total supply has been sold or ICO endtime has arrived
